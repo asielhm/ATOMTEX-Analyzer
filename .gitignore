@@ -1,0 +1,7 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+# Measurement files are private. Only synthetic test data may be committed.
+*.ats
+!tests/fixtures/synthetic.ats

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Visualizá y exportá espectros gamma localmente, sin subir tus mediciones."
+    />
+    <title>ATOMTEX · Spectrum Analyzer</title>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="./"
+        ><span class="mark">A<span>·</span></span
+        ><span>ATOMTEX<small>SPECTRUM ANALYZER</small></span></a
+      ><span class="privacy">● Procesamiento local</span>
+    </header>
+    <main>
+      <div class="eyebrow">HERRAMIENTAS DE ESPECTROMETRÍA GAMMA</div>
+      <h1>De tu espectro a tus datos.</h1>
+      <p class="intro">
+        Explorá archivos ATS y exportá tus mediciones a Excel.<br />Todo sucede
+        en tu navegador. Tus archivos permanecen en tu equipo.
+      </p>
+      <aside class="notice">
+        <strong>Tu medición, sin alterar</strong>
+        <p>
+          Lectura contrastada con ejemplo_123.ats. Las energías, cuentas y
+          calibraciones se conservan tal como aparecen en el archivo. El
+          análisis de regiones es exploratorio: no calcula actividad ni
+          identifica radionúclidos.
+        </p>
+      </aside>
+      <section id="drop" class="upload" aria-labelledby="upload-title">
+        <span class="file-icon" aria-hidden="true"
+          ><svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M12 16V3m-5 5 5-5 5 5M4 15v5h16v-5" /></svg
+        ></span>
+        <h2 id="upload-title">Cargá un espectro</h2>
+        <p>Arrastrá un archivo .ats aquí o elegilo desde tu equipo.</p>
+        <label class="button primary" for="file">Seleccionar archivo ATS</label
+        ><input
+          id="file"
+          type="file"
+          accept=".ats"
+          aria-describedby="file-limit"
+        />
+        <p id="file-limit" class="muted">
+          Un archivo · Hasta 8 MiB · Sin subir datos a servidores
+        </p>
+      </section>
+      <p id="status" role="status" aria-live="polite"></p>
+      <p id="error" role="alert" hidden></p>
+      <section id="results" hidden aria-label="Espectro cargado">
+        <div class="result-heading">
+          <div>
+            <div class="eyebrow">ESPECTRO CARGADO</div>
+            <h2 id="filename"></h2>
+          </div>
+          <div class="exports">
+            <button id="csv">Exportar CSV</button
+            ><button class="primary" id="xlsx">Exportar Excel</button>
+          </div>
+        </div>
+        <div class="stats">
+          <div><span>Canales</span><strong id="channels"></strong></div>
+          <div><span>Cuentas totales</span><strong id="total"></strong></div>
+          <div><span>Calibración</span><strong id="calibration"></strong></div>
+        </div>
+        <ul id="warnings" class="muted"></ul>
+        <div class="panel">
+          <div class="toolbar">
+            <h3>Espectro gamma</h3>
+            <div class="controls">
+              <label
+                >Eje X
+                <select id="axis">
+                  <option value="channel">Canal</option>
+                  <option value="energy">Energía (keV)</option>
+                </select></label
+              ><label
+                >Escala
+                <select id="scale">
+                  <option value="linear">Lineal</option>
+                  <option value="logarithmic">Logarítmica</option>
+                </select></label
+              ><button id="zoom-in" aria-label="Acercar gráfico">＋</button
+              ><button id="zoom-out" aria-label="Alejar gráfico">−</button
+              ><button id="focus-roi" disabled>Enfocar ROI</button
+              ><button id="reset">Restablecer vista</button>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas
+              id="chart"
+              role="img"
+              aria-label="Espectro gamma. Los valores exactos están disponibles en la tabla y en las exportaciones."
+            ></canvas>
+          </div>
+          <p class="muted">
+            Rueda para zoom · Arrastrá para desplazar · Posá el cursor para ver
+            canal, energía y cuentas.<br />En escala logarítmica se omiten los
+            ceros del gráfico; se conservan en la tabla y las exportaciones.
+          </p>
+        </div>
+        <section class="panel roi-panel" aria-labelledby="roi-title">
+          <div class="toolbar">
+            <div>
+              <div class="eyebrow">ANÁLISIS EXPLORATORIO</div>
+              <h3 id="roi-title">Región de interés y línea base</h3>
+            </div>
+            <button id="clear-roi">Limpiar ROI</button>
+          </div>
+          <p class="muted">
+            Elegí dos límites por canal o activá la selección y hacé dos clics
+            sobre el gráfico. La línea base es independiente de las cuentas
+            originales.
+          </p>
+          <div class="roi-controls">
+            <label
+              >Canal inicial<input
+                id="roi-start"
+                type="number"
+                min="0"
+                step="1"
+                value="0"
+            /></label>
+            <label
+              >Canal final<input
+                id="roi-end"
+                type="number"
+                min="1"
+                step="1"
+                value="1"
+            /></label>
+            <label
+              >Método<select id="baseline-method">
+                <option value="manual">Manual: dos alturas</option>
+                <option value="linear">Lineal: promedio de extremos</option>
+                <option value="constant">
+                  Constante: promedio de extremos
+                </option>
+              </select></label
+            >
+            <label
+              >Base izquierda (cuentas)<input
+                id="base-left"
+                type="number"
+                min="0"
+                step="any"
+                value="0"
+            /></label>
+            <label
+              >Base derecha (cuentas)<input
+                id="base-right"
+                type="number"
+                min="0"
+                step="any"
+                value="0"
+            /></label>
+            <label
+              >Ventana de extremos<input
+                id="edge"
+                type="number"
+                min="1"
+                step="1"
+                value="3"
+                disabled
+            /></label>
+          </div>
+          <div class="exports">
+            <button id="pick-roi" aria-pressed="false">
+              Seleccionar ROI en gráfico</button
+            ><button id="pick-base" aria-pressed="false">
+              Marcar dos alturas en gráfico</button
+            ><button id="analyze" class="primary">Calcular áreas</button>
+          </div>
+          <p id="roi-status" role="status" class="muted">Sin ROI aplicada.</p>
+          <div id="roi-values" class="stats" hidden>
+            <div>
+              <span>Área bruta · cuentas</span><strong id="gross"></strong>
+            </div>
+            <div>
+              <span>Área bajo línea base · cuentas</span
+              ><strong id="background"></strong>
+            </div>
+            <div>
+              <span>Área neta · cuentas</span><strong id="net"></strong>
+            </div>
+          </div>
+          <p class="muted">
+            Área neta = suma de cuentas − suma de línea base, incluyendo ambos
+            canales límite. Los resultados negativos se conservan. No representa
+            Bq ni una incertidumbre certificada. Exportá a Excel para guardar el
+            método, límites, alturas, áreas y línea base por canal.
+          </p>
+        </section>
+        <details class="panel">
+          <summary>Datos brutos y metadatos</summary>
+          <p class="muted">
+            Vista de los primeros 100 canales. Las exportaciones incluyen todos
+            los canales.
+          </p>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Canal</th>
+                  <th>Energía (keV)</th>
+                  <th>Cuentas</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+          <dl id="metadata"></dl>
+        </details>
+      </section>
+      <footer>
+        <span>ATOMTEX Spectrum Analyzer Web</span
+        ><span
+          >Datos brutos · Sin identificación de radionúclidos ni cálculo de
+          actividad</span
+        >
+      </footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

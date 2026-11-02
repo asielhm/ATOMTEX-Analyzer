@@ -1,0 +1,30 @@
+{
+  "name": "atomtex-spectrum-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:real": "node --test tests/private-sample.real.js"
+  },
+  "dependencies": {
+    "chart.js": "4.5.1",
+    "chartjs-plugin-zoom": "2.2.0",
+    "fflate": "0.8.2",
+    "hammerjs": "2.0.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "prettier": "3.6.2",
+    "vite": "8.3.5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

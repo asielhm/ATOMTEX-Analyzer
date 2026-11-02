@@ -1,0 +1,40 @@
+# Synthetic fixture, not an instrument capture.
+ATOMTEXSPECTRUM =
+TIME = 60
+REMARK = Ensayo sintético
+ECALIBRATION = 8
+0
+1.51
+3.04
+4.59
+6.16
+7.75
+9.36
+10.99
+SPECTR = 8
+0
+2
+4
+12
+30
+12
+4
+0
+EFFCALIBRATION = 8
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+RCALIBRATION = 8
+1
+2
+3
+4
+5
+6
+7
+8
