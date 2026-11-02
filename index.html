@@ -94,6 +94,8 @@
                 </select></label
               ><button id="zoom-in" aria-label="Acercar gráfico">＋</button
               ><button id="zoom-out" aria-label="Alejar gráfico">−</button
+              ><button id="pick-roi" aria-pressed="false">
+                Poner límites con clics</button
               ><button id="focus-roi" disabled>Enfocar ROI</button
               ><button id="reset">Restablecer vista</button>
             </div>
@@ -106,9 +108,12 @@
             ></canvas>
           </div>
           <p class="muted">
-            Rueda para zoom · Arrastrá para desplazar · Posá el cursor para ver
-            canal, energía y cuentas.<br />En escala logarítmica se omiten los
-            ceros del gráfico; se conservan en la tabla y las exportaciones.
+            Activá «Poner límites con clics» y marcá inicio y fin. Arrastrá las
+            líneas I/F para ajustar los límites; las áreas se recalculan.
+            También podés usar Tab y las flechas sobre cada límite.<br />Rueda
+            para zoom · Arrastrá para desplazar · Posá el cursor para ver canal,
+            energía y cuentas.<br />En escala logarítmica se omiten los ceros
+            del gráfico; se conservan en la tabla y las exportaciones.
           </p>
         </div>
         <section class="panel roi-panel" aria-labelledby="roi-title">
@@ -177,9 +182,7 @@
             /></label>
           </div>
           <div class="exports">
-            <button id="pick-roi" aria-pressed="false">
-              Seleccionar ROI en gráfico</button
-            ><button id="pick-base" aria-pressed="false">
+            <button id="pick-base" aria-pressed="false">
               Marcar dos alturas en gráfico</button
             ><button id="analyze" class="primary">Calcular áreas</button>
           </div>

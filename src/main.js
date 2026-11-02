@@ -3,6 +3,7 @@ import zoomPlugin from "chartjs-plugin-zoom";
 import { decodeAts, parseAts, MAX_BYTES } from "./parser.js";
 import { toCsv, toXlsx, metadataRows } from "./export.js";
 import { analyzeRoi } from "./analysis.js";
+import { createRoiControls } from "./roi-controls.js";
 import "./style.css";
 Chart.register(zoomPlugin);
 const $ = (id) => document.getElementById(id);
@@ -11,6 +12,33 @@ let model,
   generation = 0,
   pickMode = null,
   picks = [];
+const roiControls = createRoiControls($("chart"), {
+  getChart: () => chart,
+  getValues: () =>
+    !model
+      ? []
+      : $("axis").value === "energy"
+        ? model.energies
+        : model.counts.map((_, i) => i),
+  getLimits: () => {
+    if (pickMode === "roi")
+      return picks.length
+        ? { start: picks[0], end: null, draggable: false }
+        : null;
+    if (!model?.analysis) return null;
+    const roi = model.analysis;
+    return {
+      start: roi.start,
+      end: roi.end,
+      draggable: !pickMode,
+      minChannels: roi.method === "manual" ? 2 : 2 * roi.edge,
+    };
+  },
+  onChange: (key, channel) => {
+    $(key === "start" ? "roi-start" : "roi-end").value = channel;
+    applyAnalysis();
+  },
+});
 function setPick(mode) {
   pickMode = mode;
   picks = [];
@@ -124,6 +152,7 @@ function renderChart(preserveView = false) {
   }
   chart = new Chart($("chart"), {
     type: "line",
+    plugins: [roiControls],
     data: { datasets },
     options: {
       responsive: true,
@@ -260,8 +289,14 @@ $("drop").addEventListener(
 // Avoid accidental navigation when a file is dropped outside the target.
 for (const type of ["dragover", "drop"])
   window.addEventListener(type, (event) => event.preventDefault());
-$("axis").addEventListener("change", renderChart);
-$("scale").addEventListener("change", renderChart);
+$("axis").addEventListener("change", () => {
+  setPick(null);
+  renderChart();
+});
+$("scale").addEventListener("change", () => {
+  setPick(null);
+  renderChart(true);
+});
 $("reset").addEventListener("click", () => chart?.resetZoom());
 $("zoom-in").addEventListener("click", () => chart?.zoom(1.3));
 $("zoom-out").addEventListener("click", () => chart?.zoom(0.7));
@@ -310,8 +345,24 @@ function onChartClick(event) {
     picks.push(nearest);
     $("roi-status").textContent =
       `Primer límite: canal ${nearest}. Elegí el segundo.`;
+    chart.draw();
     if (picks.length === 2) {
       const [start, end] = picks.toSorted((a, b) => a - b);
+      const minChannels =
+        $("baseline-method").value === "manual"
+          ? 2
+          : 2 * Number($("edge").value);
+      if (
+        !Number.isInteger(minChannels) ||
+        minChannels < 2 ||
+        end - start + 1 < minChannels
+      ) {
+        picks.pop();
+        $("roi-status").textContent =
+          `Elegí otro límite: esta línea base requiere al menos ${minChannels} canales distintos en la ROI. Revisá la ventana de extremos si es necesario.`;
+        chart.draw();
+        return;
+      }
       $("roi-start").value = start;
       $("roi-end").value = end;
       if ($("baseline-method").value === "manual") {

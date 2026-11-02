@@ -137,3 +137,187 @@ test("graph clicks select ROI and edit baseline, keyboard controls remain availa
   );
   expect(errors).toEqual([]);
 });
+
+async function dragLimit(page, slider, pixels) {
+  await slider.scrollIntoViewIfNeeded();
+  const box = await slider.boundingBox();
+  const x = box.x + box.width / 2,
+    y = box.y + 35;
+  await page.mouse.move(x, y);
+  await page.mouse.down();
+  await page.mouse.move(x + pixels, y, { steps: 8 });
+  await page.mouse.up();
+}
+
+test("integration limits drag independently, recalculate areas and retain manual heights", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("./");
+  await page.locator("#file").setInputFiles(synthetic);
+  await page.locator("#axis").selectOption("channel");
+  await page.locator("#roi-start").fill("1");
+  await page.locator("#roi-end").fill("6");
+  await page.locator("#base-left").fill("2");
+  await page.locator("#base-right").fill("4");
+  await page.locator("#analyze").click();
+  const start = page.getByRole("slider", {
+    name: "Límite inicial de integración",
+  });
+  const end = page.getByRole("slider", { name: "Límite final de integración" });
+  await expect(start).toHaveAttribute("aria-valuenow", "1");
+  await expect(end).toHaveAttribute("aria-valuenow", "6");
+  const step =
+    ((await end.boundingBox()).x - (await start.boundingBox()).x) / 5;
+  await dragLimit(page, start, step);
+  await expect(page.locator("#roi-start")).toHaveValue("2");
+  await expect(page.locator("#roi-end")).toHaveValue("6");
+  await expect(page.locator("#net")).toHaveText("47");
+  await dragLimit(page, end, -step);
+  await expect(page.locator("#roi-end")).toHaveValue("5");
+  await expect(page.locator("#net")).toHaveText("46");
+  await expect(page.locator("#base-left")).toHaveValue("2");
+  await expect(page.locator("#base-right")).toHaveValue("4");
+  await expect(page.locator("#baseline-method")).toHaveValue("manual");
+  await start.focus();
+  await page.keyboard.press("End");
+  await expect(page.locator("#roi-start")).toHaveValue("4");
+  await end.focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.locator("#roi-end")).toHaveValue("5");
+  const download = page.waitForEvent("download");
+  await page.locator("#xlsx").click();
+  const files = unzipSync(await readFile(await (await download).path()));
+  expect(strFromU8(files["xl/charts/chart1.xml"])).toContain(
+    "Espectro!$F$6:$F$7",
+  );
+  await page.locator("#clear-roi").click();
+  await expect(start).toBeHidden();
+  await expect(end).toBeHidden();
+  expect(errors).toEqual([]);
+});
+
+for (const method of ["linear", "constant"])
+  test(`drag limits preserves ${method} baseline and minimum endpoint windows`, async ({
+    page,
+  }) => {
+    await page.goto("./");
+    await page.locator("#file").setInputFiles(synthetic);
+    await page.locator("#axis").selectOption("channel");
+    await page.locator("#roi-start").fill("1");
+    await page.locator("#roi-end").fill("6");
+    await page.locator("#baseline-method").selectOption(method);
+    await page.locator("#edge").fill("2");
+    await page.locator("#analyze").click();
+    const start = page.getByRole("slider", {
+      name: "Límite inicial de integración",
+    });
+    await dragLimit(page, start, 600);
+    await expect(page.locator("#roi-start")).toHaveValue("3");
+    await expect(page.locator("#roi-end")).toHaveValue("6");
+    await expect(page.locator("#baseline-method")).toHaveValue(method);
+    await expect(page.locator("#edge")).toHaveValue("2");
+    await expect(page.locator("#base-left")).toBeDisabled();
+    await expect(page.locator("#roi-values")).toBeVisible();
+    await expect(page.locator("#error")).toBeHidden();
+  });
+
+test("limits follow energy and log axes after zoom, and repeated clicks can be corrected", async ({
+  page,
+}) => {
+  await page.goto("./");
+  await page.locator("#file").setInputFiles(synthetic);
+  await page.locator("#pick-roi").click();
+  await page.locator("#chart").click({ position: { x: 160, y: 140 } });
+  await page.locator("#chart").click({ position: { x: 160, y: 140 } });
+  await expect(page.locator("#pick-roi")).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await page.locator("#chart").click({ position: { x: 680, y: 140 } });
+  await expect(page.locator("#roi-values")).toBeVisible();
+  await page.locator("#scale").selectOption("logarithmic");
+  await page.locator("#focus-roi").click();
+  const start = page.getByRole("slider", {
+    name: "Límite inicial de integración",
+  });
+  await start.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator("#roi-values")).toBeVisible();
+  await expect(start).toHaveAttribute(
+    "aria-valuenow",
+    await page.locator("#roi-start").inputValue(),
+  );
+  await page.locator("#axis").selectOption("channel");
+  await expect(start).toBeVisible();
+});
+
+test.describe("touch integration controls", () => {
+  test.use({ hasTouch: true, viewport: { width: 390, height: 844 } });
+  test("a finger moves a limit without panning the spectrum", async ({
+    page,
+  }) => {
+    await page.goto("./");
+    await page.locator("#file").setInputFiles(synthetic);
+    await page.locator("#axis").selectOption("channel");
+    await page.locator("#roi-start").fill("1");
+    await page.locator("#roi-end").fill("6");
+    await page.locator("#analyze").click();
+    const start = page.getByRole("slider", {
+      name: "Límite inicial de integración",
+    });
+    const end = page.getByRole("slider", {
+      name: "Límite final de integración",
+    });
+    await start.scrollIntoViewIfNeeded();
+    const a = await start.boundingBox(),
+      b = await end.boundingBox();
+    const x = a.x + a.width / 2,
+      y = a.y + 35,
+      step = (b.x - a.x) / 5;
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchStart",
+      touchPoints: [{ x, y }],
+    });
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchMove",
+      touchPoints: [{ x: x + step, y }],
+    });
+    await cdp.send("Input.dispatchTouchEvent", {
+      type: "touchEnd",
+      touchPoints: [],
+    });
+    await expect(page.locator("#roi-start")).toHaveValue("2");
+    await expect(page.locator("#roi-end")).toHaveValue("6");
+    await expect(page.locator("#roi-values")).toBeVisible();
+    await cdp.detach();
+  });
+});
+
+test("both handles remain reachable for repeated energies", async ({
+  page,
+}) => {
+  await page.goto("./");
+  await page.locator("#file").setInputFiles({
+    name: "duplicates.ats",
+    mimeType: "text/plain",
+    buffer: Buffer.from("SPECTR = 4\n1\n2\n3\n4\nECALIBRATION = 4\n0\n0\n1\n2"),
+  });
+  await page.locator("#roi-start").fill("0");
+  await page.locator("#roi-end").fill("1");
+  await page.locator("#analyze").click();
+  const start = page.getByRole("slider", {
+    name: "Límite inicial de integración",
+  });
+  const end = page.getByRole("slider", { name: "Límite final de integración" });
+  await expect(start).toBeVisible();
+  await expect(end).toBeVisible();
+  await start.click({ position: { x: 14, y: 14 } });
+  await expect(start).toBeFocused();
+  await end.click({ position: { x: 14, y: 14 } });
+  await expect(end).toBeFocused();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator("#roi-end")).toHaveValue("2");
+});

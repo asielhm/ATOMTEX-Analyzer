@@ -7,7 +7,7 @@ Aplicación web estática, en español, para abrir espectros gamma ATOMTEX, expl
 - Selector local y arrastrar/soltar un archivo `.ats` (hasta 8 MiB y 65.536 canales).
 - Lectura de `SPECTR`, `ECALIBRATION`, `EFFCALIBRATION`, `RCALIBRATION` y metadatos. No se rellenan bloques ausentes ni se interpolan energías.
 - Gráfico de cuentas contra canal o energía, cursor, zoom con rueda/botones y desplazamiento al arrastrar; escala lineal/logarítmica. Los ceros se omiten del gráfico logarítmico, conservándose en datos y exportaciones.
-- ROI por canales inclusivos: entradas numéricas o dos clics en el gráfico. Las ROI se mantienen por canal aunque cambies el eje a energía.
+- ROI por canales inclusivos: entradas numéricas o botón **Poner límites con clics** junto al gráfico; marcá inicio y fin con dos clics. Las líneas **I/F** se pueden arrastrar con mouse o dedo para ajustar la región y recalcular las áreas inmediatamente. También se ajustan con Tab y flechas (Shift mueve 10 canales; Inicio/Fin llevan al extremo permitido). Los límites no se cruzan y respetan la ventana de extremos de la línea base elegida. Las ROI se mantienen por canal aunque cambies el eje a energía.
 - Línea base manual: alturas izquierda/derecha editables o dos clics para fijarlas sobre el gráfico. Los clics fijan primero la altura izquierda y luego la derecha, en los límites de la ROI actual; su coordenada horizontal no cambia los límites.
 - Bases lineal y constante estimadas por promedio de ventanas de extremos. Las ventanas no pueden solaparse.
 - Áreas bruta, bajo base y neta, con sombreado de la ROI. Al editar parámetros se invalida el resultado anterior; **Calcular áreas** aplica los cambios. **Limpiar ROI** elimina el análisis sin tocar los datos.
@@ -36,6 +36,7 @@ Se genera `dist/`; puede servirse en cualquier hosting estático bajo `/ATOMTEX-
 
 - `src/parser.js`: decodificación y validación del ATS, sin dependencias de UI.
 - `src/analysis.js`: cálculo puro de ROI y base, sin mutación del espectro.
+- `src/roi-controls.js`: marcadores de límites, arrastre con mouse/touch y ajuste accesible por teclado.
 - `src/export.js`: CSV y paquete OOXML/XLSX, con strings de metadatos escapadas y literales, nunca fórmulas.
 - `src/main.js`: carga local, gráfico e interacción; `index.html` y `src/style.css`: interfaz adaptable.
 - `tests/fixtures/synthetic.ats`: datos artificiales para CI. Las mediciones reales permanecen fuera del repositorio; `tests/private-sample.real.js` permite validarlas localmente.

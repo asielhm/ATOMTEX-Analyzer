@@ -452,3 +452,40 @@ button[aria-pressed="true"] {
     flex-wrap: wrap;
   }
 }
+.chart {
+  position: relative;
+}
+.roi-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.roi-handle {
+  position: absolute;
+  width: 28px;
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  outline-offset: -3px;
+}
+.roi-handle span {
+  display: grid;
+  place-items: center;
+  height: 27px;
+  width: 27px;
+  border-radius: 5px;
+  background: #fff4df;
+  border: 2px solid #b56825;
+  color: #794414;
+  font-size: 11px;
+  font-weight: 750;
+  box-shadow: 0 1px 4px #18352f20;
+}
+.roi-handle:hover span,
+.roi-handle:focus-visible span,
+.roi-handle.dragging span {
+  color: white;
+  background: #9a551e;
+}
