@@ -26,14 +26,14 @@ npm ci
 npm run dev
 ```
 
-Abrí la dirección que informa Vite bajo la ruta `/ATOMTEX-Analyzer/`. Para compilar y probar el artefacto estático:
+Abrí la dirección que informa Vite bajo la ruta `/ats-spectrum-analizer/`. Para compilar y probar el artefacto estático:
 
 ```sh
 npm run build
 npm run preview
 ```
 
-Se genera `dist/`; puede servirse en cualquier hosting estático bajo `/ATOMTEX-Analyzer/`. No abras `index.html` con `file://`: los módulos requieren un servidor HTTP. La aplicación no incorpora backend ni subida de archivos. Dependencias y tipografías se sirven desde el mismo sitio. Una vez cargada la página, la lectura, el análisis y las descargas no necesitan solicitudes de red.
+Se genera `dist/`; puede servirse en cualquier hosting estático bajo `/ats-spectrum-analizer/`. No abras `index.html` con `file://`: los módulos requieren un servidor HTTP. La aplicación no incorpora backend ni subida de archivos. Dependencias y tipografías se sirven desde el mismo sitio. Una vez cargada la página, la lectura, el análisis y las descargas no necesitan solicitudes de red.
 
 ### Estructura para modificar la aplicación
 
@@ -141,10 +141,10 @@ El workflow de CI ejecuta pruebas, build y navegador en pull requests. El workfl
 1. Revisar y fusionar el pull request.
 2. En **Settings → Pages → Build and deployment**, seleccionar **GitHub Actions**.
 3. A partir de ese momento, cada merge en `main` inicia automáticamente las validaciones y el despliegue; no hace falta **Run workflow**. Para reintentar una publicación se conserva esa opción.
-4. Revisar el resultado y abrir el sitio en la ruta `/ATOMTEX-Analyzer/`.
+4. Revisar el resultado y abrir el sitio en la ruta `/ats-spectrum-analizer/`.
 
-`vite.config.js` fija esa ruta base para los assets. La ruta del repositorio se conserva por compatibilidad con los enlaces existentes; no es la marca visible del producto. El agente prepara el workflow; un cambio en una rama de revisión aún no está desplegado en el sitio público.
+`vite.config.js` fija esa ruta base para los assets. Playwright toma la ruta directamente de Vite, de modo que un cambio de nombre del repositorio no deja las pruebas apuntando a una ubicación anterior. Si se vuelve a renombrar el repositorio, actualizá `base` en `vite.config.js` y publicá nuevamente. El agente prepara el workflow; un cambio en una rama de revisión aún no está desplegado en el sitio público.
 
 ## Referencia
 
-Implementación de [issue #1](https://github.com/asielhm/ATOMTEX-Analyzer/issues/1), ampliada con ROI arrastrable, línea base manual, sugerencias de radionúclidos y automatización a pedido del usuario. El ejecutable Windows no está en este repositorio; la versión web es independiente.
+Implementación de [issue #1](https://github.com/asielhm/ats-spectrum-analizer/issues/1), ampliada con ROI arrastrable, línea base manual, sugerencias de radionúclidos y automatización a pedido del usuario. El ejecutable Windows no está en este repositorio; la versión web es independiente.
