@@ -7,14 +7,22 @@
       name="description"
       content="Visualizá y exportá espectros gamma localmente, sin subir tus mediciones."
     />
-    <title>ATOMTEX · Spectrum Analyzer</title>
+    <title>ATS Spectrum Analizer</title>
+    <link rel="icon" type="image/png" href="/ats-logo.png" />
+    <link rel="apple-touch-icon" href="/ats-logo.png" />
   </head>
   <body>
     <header>
       <a class="brand" href="./"
-        ><span class="mark">A<span>·</span></span
-        ><span>ATOMTEX<small>SPECTRUM ANALYZER</small></span></a
-      ><span class="privacy">● Procesamiento local</span>
+        ><img
+          class="brand-logo"
+          src="/ats-logo.png"
+          alt="Logo de ATS Spectrum Analizer"
+          width="48"
+          height="48"
+        /><span>ATS<small>SPECTRUM ANALIZER</small></span></a
+      >
+      <span class="privacy">● Procesamiento local</span>
     </header>
     <main>
       <div class="eyebrow">HERRAMIENTAS DE ESPECTROMETRÍA GAMMA</div>
@@ -26,10 +34,10 @@
       <aside class="notice">
         <strong>Tu medición, sin alterar</strong>
         <p>
-          Lectura contrastada con ejemplo_123.ats. Las energías, cuentas y
+          Lectura contrastada con una muestra real. Las energías, cuentas y
           calibraciones se conservan tal como aparecen en el archivo. El
-          análisis de regiones es exploratorio: no calcula actividad ni
-          identifica radionúclidos.
+          análisis es exploratorio: sugiere candidatos por energía, sin
+          confirmar identidades ni calcular actividad.
         </p>
       </aside>
       <section id="drop" class="upload" aria-labelledby="upload-title">
@@ -116,6 +124,93 @@
             del gráfico; se conservan en la tabla y las exportaciones.
           </p>
         </div>
+        <section
+          class="panel identification-panel"
+          aria-labelledby="identification-title"
+        >
+          <div class="toolbar">
+            <div>
+              <div class="eyebrow">LECTURA ASISTIDA</div>
+              <h3 id="identification-title">Picos y posibles radionúclidos</h3>
+            </div>
+            <button id="reidentify">Reanalizar</button>
+          </div>
+          <p class="muted">
+            La búsqueda se ejecuta al cargar el archivo y al cambiar estos
+            parámetros. Una energía puede tener varias explicaciones:
+            calibración, resolución NaI, interferencias, fondo, rayos X, escape
+            y suma de picos pueden producir coincidencias. No se confirma
+            identidad, actividad ni ausencia de radionúclidos.
+          </p>
+          <div class="roi-controls identification-controls">
+            <label
+              >Tolerancia absoluta (keV)<input
+                id="id-tolerance"
+                type="number"
+                min="0.1"
+                max="100"
+                step="0.1"
+                value="5"
+            /></label>
+            <label
+              >Tolerancia relativa (%)<input
+                id="id-relative"
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                value="2"
+            /></label>
+            <label
+              >Umbral de contraste<input
+                id="id-threshold"
+                type="number"
+                min="1"
+                max="20"
+                step="0.5"
+                value="4"
+            /></label>
+            <label
+              >Semiventana (canales)<input
+                id="id-window"
+                type="number"
+                min="3"
+                max="128"
+                step="1"
+                value="16"
+            /></label>
+          </div>
+          <label class="auto-roi-option"
+            ><input id="auto-peak-roi" type="checkbox" checked /> Analizar
+            automáticamente el pico principal al cargar</label
+          >
+          <p id="identification-status" class="muted" role="status"></p>
+          <div class="table-scroll">
+            <table class="peak-table">
+              <thead>
+                <tr>
+                  <th>Canal</th>
+                  <th>Energía observada (keV)</th>
+                  <th>Coincidencias orientativas</th>
+                  <th>ROI</th>
+                </tr>
+              </thead>
+              <tbody id="peak-rows"></tbody>
+            </table>
+          </div>
+          <p class="muted">
+            <span id="catalog-info"></span> ·
+            <a id="catalog-source" target="_blank" rel="noopener noreferrer"
+              >Fuente SandiaDecay / ENSDF</a
+            >
+            · <a href="./licenses/ATTRIBUTION.txt">Atribución</a> ·
+            <a href="./licenses/SandiaDecay-LGPL-2.1.txt">Licencia</a>. La
+            calibración física del archivo no está verificada. Tolerancia =
+            máximo de la absoluta y el porcentaje sobre la energía de
+            referencia; no equivale a probabilidad de identificación. Las líneas
+            de hijas no demuestran equilibrio con sus padres.
+          </p>
+        </section>
         <section class="panel roi-panel" aria-labelledby="roi-title">
           <div class="toolbar">
             <div>
@@ -228,9 +323,9 @@
         </details>
       </section>
       <footer>
-        <span>ATOMTEX Spectrum Analyzer Web</span
+        <span>ATS Spectrum Analizer</span
         ><span
-          >Datos brutos · Sin identificación de radionúclidos ni cálculo de
+          >Datos brutos · Candidatos orientativos · Sin cálculo de
           actividad</span
         >
       </footer>

@@ -1,0 +1,977 @@
+{
+  "version": "sandia-subset-1",
+  "sourceRevision": "cd75314b56e12b80497531a1fbeed9c8e9968403",
+  "sourceSha256": "2794c284a47523ccdb9303a847b6ffd6afcd5f4a5c446d777e4c0f25b1728ebf",
+  "sourceUrl": "https://github.com/sandialabs/SandiaDecay/blob/cd75314b56e12b80497531a1fbeed9c8e9968403/sandia.decay.xml",
+  "license": "LGPL-2.1",
+  "nuclideCount": 27,
+  "selection": "28 selected nuclides; gamma only, 20–3500 keV, probability per parent decay >=0.005. Cs-137 includes Ba-137m daughter branch. No chain-equilibrium assumption for other nuclides.",
+  "lines": [
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 99.51,
+      "emissionProbability": 0.0126
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 129.06,
+      "emissionProbability": 0.0242
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 153.98,
+      "emissionProbability": 0.00722
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 209.25,
+      "emissionProbability": 0.0389
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 270.25,
+      "emissionProbability": 0.0346
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 328.0,
+      "emissionProbability": 0.0295
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 338.32,
+      "emissionProbability": 0.1127
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 409.46,
+      "emissionProbability": 0.0192
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 463.0,
+      "emissionProbability": 0.044
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 562.5,
+      "emissionProbability": 0.0087
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 726.86,
+      "emissionProbability": 0.0062
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 755.32,
+      "emissionProbability": 0.01
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 772.29,
+      "emissionProbability": 0.0149
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 794.95,
+      "emissionProbability": 0.0425
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 830.49,
+      "emissionProbability": 0.0054
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 835.71,
+      "emissionProbability": 0.0161
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 840.38,
+      "emissionProbability": 0.0091
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 904.2,
+      "emissionProbability": 0.0077
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 911.2,
+      "emissionProbability": 0.258
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 964.77,
+      "emissionProbability": 0.0499
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 968.97,
+      "emissionProbability": 0.158
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1247.08,
+      "emissionProbability": 0.005
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1459.14,
+      "emissionProbability": 0.0083
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1495.91,
+      "emissionProbability": 0.0086
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1580.53,
+      "emissionProbability": 0.006
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1588.2,
+      "emissionProbability": 0.0322
+    },
+    {
+      "nuclide": "Ac-228",
+      "emitter": "Ac-228",
+      "energy": 1630.63,
+      "emissionProbability": 0.0151
+    },
+    {
+      "nuclide": "Am-241",
+      "emitter": "Am-241",
+      "energy": 26.35,
+      "emissionProbability": 0.024
+    },
+    {
+      "nuclide": "Am-241",
+      "emitter": "Am-241",
+      "energy": 59.54,
+      "emissionProbability": 0.359
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 53.1625,
+      "emissionProbability": 0.02199
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 79.6139,
+      "emissionProbability": 0.0262
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 80.9971,
+      "emissionProbability": 0.3406
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 160.613,
+      "emissionProbability": 0.00645
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 276.3997,
+      "emissionProbability": 0.07164
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 302.853,
+      "emissionProbability": 0.1833
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 356.017,
+      "emissionProbability": 0.6205
+    },
+    {
+      "nuclide": "Ba-133",
+      "emitter": "Ba-133",
+      "energy": 383.848,
+      "emissionProbability": 0.0894
+    },
+    {
+      "nuclide": "Be-7",
+      "emitter": "Be-7",
+      "energy": 477.595,
+      "emissionProbability": 0.1052
+    },
+    {
+      "nuclide": "Bi-212",
+      "emitter": "Bi-212",
+      "energy": 39.857,
+      "emissionProbability": 0.01063824
+    },
+    {
+      "nuclide": "Bi-212",
+      "emitter": "Bi-212",
+      "energy": 727.33,
+      "emissionProbability": 0.06668646
+    },
+    {
+      "nuclide": "Bi-212",
+      "emitter": "Bi-212",
+      "energy": 785.37,
+      "emissionProbability": 0.01101832
+    },
+    {
+      "nuclide": "Bi-212",
+      "emitter": "Bi-212",
+      "energy": 1078.62,
+      "emissionProbability": 0.00563728
+    },
+    {
+      "nuclide": "Bi-212",
+      "emitter": "Bi-212",
+      "energy": 1620.5,
+      "emissionProbability": 0.01466974
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 609.312,
+      "emissionProbability": 0.4609999797
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 665.453,
+      "emissionProbability": 0.0145999994
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 768.356,
+      "emissionProbability": 0.0493999978
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 806.174,
+      "emissionProbability": 0.0121999995
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 934.061,
+      "emissionProbability": 0.0302999987
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1120.287,
+      "emissionProbability": 0.1509999933
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1155.19,
+      "emissionProbability": 0.0162999993
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1238.11,
+      "emissionProbability": 0.0578999974
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1280.96,
+      "emissionProbability": 0.0142999994
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1377.669,
+      "emissionProbability": 0.0399999982
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1385.31,
+      "emissionProbability": 0.0075699997
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1401.5,
+      "emissionProbability": 0.0126999994
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1407.98,
+      "emissionProbability": 0.0214999991
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1509.228,
+      "emissionProbability": 0.0210999991
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1583.22,
+      "emissionProbability": 0.0068999997
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1661.28,
+      "emissionProbability": 0.0114999995
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1729.595,
+      "emissionProbability": 0.0291999987
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1764.494,
+      "emissionProbability": 0.1539999932
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 1847.42,
+      "emissionProbability": 0.0210999991
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 2118.55,
+      "emissionProbability": 0.0113999995
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 2204.21,
+      "emissionProbability": 0.0507999978
+    },
+    {
+      "nuclide": "Bi-214",
+      "emitter": "Bi-214",
+      "energy": 2447.86,
+      "emissionProbability": 0.0156999993
+    },
+    {
+      "nuclide": "Co-57",
+      "emitter": "Co-57",
+      "energy": 122.06065,
+      "emissionProbability": 0.856
+    },
+    {
+      "nuclide": "Co-57",
+      "emitter": "Co-57",
+      "energy": 136.47356,
+      "emissionProbability": 0.1068
+    },
+    {
+      "nuclide": "Co-58",
+      "emitter": "Co-58",
+      "energy": 810.76,
+      "emissionProbability": 0.9945
+    },
+    {
+      "nuclide": "Co-58",
+      "emitter": "Co-58",
+      "energy": 863.95,
+      "emissionProbability": 0.006862
+    },
+    {
+      "nuclide": "Co-58",
+      "emitter": "Co-58",
+      "energy": 1674.72,
+      "emissionProbability": 0.0051714
+    },
+    {
+      "nuclide": "Co-60",
+      "emitter": "Co-60",
+      "energy": 1173.228,
+      "emissionProbability": 0.9985
+    },
+    {
+      "nuclide": "Co-60",
+      "emitter": "Co-60",
+      "energy": 1332.492,
+      "emissionProbability": 0.999826
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 475.35,
+      "emissionProbability": 0.0145999562
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 563.246,
+      "emissionProbability": 0.0837997486
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 569.331,
+      "emissionProbability": 0.1542995371
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 604.721,
+      "emissionProbability": 0.9755970732
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 795.8,
+      "emissionProbability": 0.8543974368
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 801.9,
+      "emissionProbability": 0.0872997381
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 1038.5,
+      "emissionProbability": 0.0098999703
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 1167.86,
+      "emissionProbability": 0.017999946
+    },
+    {
+      "nuclide": "Cs-134",
+      "emitter": "Cs-134",
+      "energy": 1365.13,
+      "emissionProbability": 0.0303999088
+    },
+    {
+      "nuclide": "Cs-137",
+      "emitter": "Ba-137m",
+      "energy": 661.657,
+      "emissionProbability": 0.8533367506
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 121.781,
+      "emissionProbability": 0.2857994756
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 244.697,
+      "emissionProbability": 0.0758298628
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 344.278,
+      "emissionProbability": 0.2649942
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 367.7887,
+      "emissionProbability": 0.00861
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 411.1163,
+      "emissionProbability": 0.0223400001
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 443.965,
+      "emissionProbability": 0.0282099481
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 688.67,
+      "emissionProbability": 0.0085699502
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 778.904,
+      "emissionProbability": 0.129420009
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 867.378,
+      "emissionProbability": 0.0424499204
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 964.079,
+      "emissionProbability": 0.1460497327
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1005.272,
+      "emissionProbability": 0.0064599884
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1085.86,
+      "emissionProbability": 0.102069807
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1089.73,
+      "emissionProbability": 0.0172700001
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1112.069,
+      "emissionProbability": 0.1364397472
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1212.94,
+      "emissionProbability": 0.014219973
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1299.14,
+      "emissionProbability": 0.0162299992
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1408.006,
+      "emissionProbability": 0.2100496149
+    },
+    {
+      "nuclide": "Eu-152",
+      "emitter": "Eu-152",
+      "energy": 1457.643,
+      "emissionProbability": 0.0050199913
+    },
+    {
+      "nuclide": "I-131",
+      "emitter": "I-131",
+      "energy": 80.19,
+      "emissionProbability": 0.0261618016
+    },
+    {
+      "nuclide": "I-131",
+      "emitter": "I-131",
+      "energy": 284.31,
+      "emissionProbability": 0.0612064292
+    },
+    {
+      "nuclide": "I-131",
+      "emitter": "I-131",
+      "energy": 364.49,
+      "emissionProbability": 0.8150042201
+    },
+    {
+      "nuclide": "I-131",
+      "emitter": "I-131",
+      "energy": 636.99,
+      "emissionProbability": 0.0715571964
+    },
+    {
+      "nuclide": "I-131",
+      "emitter": "I-131",
+      "energy": 722.91,
+      "emissionProbability": 0.0176855283
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 205.7943,
+      "emissionProbability": 0.0317999986
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 295.9565,
+      "emissionProbability": 0.282999972
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 308.45507,
+      "emissionProbability": 0.292999971
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 316.50618,
+      "emissionProbability": 0.8271054258
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 374.52,
+      "emissionProbability": 0.0070899895
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 416.4688,
+      "emissionProbability": 0.0066699993
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 468.0688,
+      "emissionProbability": 0.4781031363
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 484.65,
+      "emissionProbability": 0.031299977
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 588.581,
+      "emissionProbability": 0.0446999956
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 604.41105,
+      "emissionProbability": 0.0822999918
+    },
+    {
+      "nuclide": "Ir-192",
+      "emitter": "Ir-192",
+      "energy": 612.47,
+      "emissionProbability": 0.0530999947
+    },
+    {
+      "nuclide": "K-40",
+      "emitter": "K-40",
+      "energy": 1460.75,
+      "emissionProbability": 0.1066999637
+    },
+    {
+      "nuclide": "Mn-54",
+      "emitter": "Mn-54",
+      "energy": 834.85,
+      "emissionProbability": 0.99976
+    },
+    {
+      "nuclide": "Na-22",
+      "emitter": "Na-22",
+      "energy": 1274.54,
+      "emissionProbability": 0.99941
+    },
+    {
+      "nuclide": "Pa-234m",
+      "emitter": "Pa-234m",
+      "energy": 43.5,
+      "emissionProbability": 0.00978432
+    },
+    {
+      "nuclide": "Pa-234m",
+      "emitter": "Pa-234m",
+      "energy": 1000.99,
+      "emissionProbability": 0.0083699786
+    },
+    {
+      "nuclide": "Pb-212",
+      "emitter": "Pb-212",
+      "energy": 115.183,
+      "emissionProbability": 0.00596448
+    },
+    {
+      "nuclide": "Pb-212",
+      "emitter": "Pb-212",
+      "energy": 238.632,
+      "emissionProbability": 0.433
+    },
+    {
+      "nuclide": "Pb-212",
+      "emitter": "Pb-212",
+      "energy": 300.087,
+      "emissionProbability": 0.0328
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 53.2275,
+      "emissionProbability": 0.012
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 241.997,
+      "emissionProbability": 0.0743
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 258.87,
+      "emissionProbability": 0.00524
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 295.24,
+      "emissionProbability": 0.193
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 351.932,
+      "emissionProbability": 0.376
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 785.96,
+      "emissionProbability": 0.0107
+    },
+    {
+      "nuclide": "Pb-214",
+      "emitter": "Pb-214",
+      "energy": 839.04,
+      "emissionProbability": 0.00587
+    },
+    {
+      "nuclide": "Ra-226",
+      "emitter": "Ra-226",
+      "energy": 186.21,
+      "emissionProbability": 0.0359
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 66.05,
+      "emissionProbability": 0.0111180155
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 96.73,
+      "emissionProbability": 0.0342029956
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 121.12,
+      "emissionProbability": 0.1719904186
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 136.0,
+      "emissionProbability": 0.5825204531
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 198.61,
+      "emissionProbability": 0.0147361607
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 264.66,
+      "emissionProbability": 0.5888669285
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 279.54,
+      "emissionProbability": 0.1942544899
+    },
+    {
+      "nuclide": "Se-75",
+      "emitter": "Se-75",
+      "energy": 400.66,
+      "emissionProbability": 0.114675857
+    },
+    {
+      "nuclide": "Tc-99m",
+      "emitter": "Tc-99m",
+      "energy": 140.51,
+      "emissionProbability": 0.8905670478
+    },
+    {
+      "nuclide": "Th-234",
+      "emitter": "Th-234",
+      "energy": 63.29,
+      "emissionProbability": 0.0485
+    },
+    {
+      "nuclide": "Th-234",
+      "emitter": "Th-234",
+      "energy": 92.38,
+      "emissionProbability": 0.028116
+    },
+    {
+      "nuclide": "Th-234",
+      "emitter": "Th-234",
+      "energy": 92.8,
+      "emissionProbability": 0.027715
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 252.61,
+      "emissionProbability": 0.0069412
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 277.358,
+      "emissionProbability": 0.06306576
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 510.77,
+      "emissionProbability": 0.2260848
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 583.191,
+      "emissionProbability": 0.8448432
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 763.13,
+      "emissionProbability": 0.01814628
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 860.564,
+      "emissionProbability": 0.12424748
+    },
+    {
+      "nuclide": "Tl-208",
+      "emitter": "Tl-208",
+      "energy": 2614.533,
+      "emissionProbability": 0.9916
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 26.55,
+      "emissionProbability": 0.0054
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 64.35,
+      "emissionProbability": 0.0065
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 108.99,
+      "emissionProbability": 0.0154
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 143.76,
+      "emissionProbability": 0.1096
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 163.38,
+      "emissionProbability": 0.0508
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 185.71,
+      "emissionProbability": 0.572
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 194.94,
+      "emissionProbability": 0.0063
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 202.11,
+      "emissionProbability": 0.0108
+    },
+    {
+      "nuclide": "U-235",
+      "emitter": "U-235",
+      "energy": 205.309,
+      "emissionProbability": 0.0501
+    },
+    {
+      "nuclide": "Zn-65",
+      "emitter": "Zn-65",
+      "energy": 1115.54,
+      "emissionProbability": 0.5004
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+The gamma energy subset (src/data/gamma-lines.json) is derived from SandiaDecay,
+revision cd75314b56e12b80497531a1fbeed9c8e9968403 (sandia.decay.xml).
+Source: https://github.com/sandialabs/SandiaDecay
+Copyright 2018 National Technology & Engineering Solutions of Sandia, LLC (NTESS).
+Under Contract DE-NA0003525 the U.S. Government retains certain rights.
+Source data prepared by John Mattingly, Steve Horne, Greg Thoreson, Will Johnson,
+and others, originally based on ENSDF, with manual corrections.
+This subset is distributed under LGPL 2.1; see SandiaDecay-LGPL-2.1.txt.
+The subset and its generating script are provided in this repository. It selects
+27 nuclides with qualifying gamma emissions from 28 considered nuclides, 20–3500
+keV and emission probability per parent decay >=0.005. Cs-137 includes the
+Ba-137m daughter branch. The upstream data and this subset may contain errors
+and are not definitive. No upstream C++ library code is used.

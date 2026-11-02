@@ -32,10 +32,44 @@ export const dataRows = (model) =>
       ? model.analysis.baseline[i - model.analysis.start]
       : null,
   ]);
+export function peakRows(report) {
+  return report.peaks.flatMap((peak) => {
+    const lines = peak.candidates.length ? peak.candidates : [null];
+    const rows = lines.map((line) => [
+      peak.channel,
+      peak.energy,
+      line?.nuclide ?? "Sin coincidencias en catálogo parcial",
+      line?.energy ?? null,
+      line?.delta ?? null,
+      line?.tolerance ?? null,
+      line?.support ?? 0,
+      "Orientativo; no confirmado",
+      line?.emitter ?? "",
+      peak.start,
+      peak.end,
+    ]);
+    if (peak.annihilation)
+      rows.push([
+        peak.channel,
+        peak.energy,
+        "Posible aniquilación; no identifica radionúclido",
+        510.999,
+        peak.energy - 510.999,
+        null,
+        0,
+        "Fenómeno compatible, no confirmado",
+        "",
+        peak.start,
+        peak.end,
+      ]);
+    return rows;
+  });
+}
 export function metadataRows(model) {
   return [
     ["Archivo", model.filename],
-    ["Formato", "ATOMTEX ATS; contrastado con ejemplo_123.ats"],
+    ["Aplicación", "ATS Spectrum Analizer"],
+    ["Formato", "ATS; contrastado con una muestra real"],
     ["Canales", model.counts.length],
     ["Origen del canal", 0],
     [
@@ -62,10 +96,30 @@ export function metadataRows(model) {
           ],
         ]
       : []),
-    ...model.metadata.map(([block, key, value]) => [
-      `${block}${key ? `.${key}` : ""}`,
-      value,
-    ]),
+    ...(model.identification
+      ? [
+          ["Búsqueda de radionúclidos", model.identification.status],
+          ["Catálogo gamma", model.identification.catalogVersion],
+          ["Fuente del catálogo", model.identification.sourceUrl],
+          [
+            "Tolerancia absoluta (keV)",
+            model.identification.settings.absoluteTolerance,
+          ],
+          [
+            "Tolerancia relativa (%)",
+            model.identification.settings.relativeTolerance,
+          ],
+          ["Umbral heurístico", model.identification.settings.threshold],
+          ["Semiventana (canales)", model.identification.settings.window],
+          [
+            "Interpretación",
+            "Coincidencias por energía; no confirman identidad, ausencia, actividad ni equilibrio de cadenas",
+          ],
+        ]
+      : []),
+    ...model.metadata
+      .filter(([, key]) => key.toUpperCase() !== "ATOMTEXSPECTRUM")
+      .map(([block, key, value]) => [`${block}${key ? `.${key}` : ""}`, value]),
   ];
 }
 // Numeric CSV columns only: no source metadata can become an Excel formula.
@@ -108,6 +162,7 @@ function worksheet(rows, drawing = false) {
 }
 export function toXlsx(model) {
   const last = model.counts.length + 1;
+  const hasPeaks = !!model.identification;
   const energy = model.hasEnergy ?? !!model.energies;
   const xcol = energy ? "B" : "A";
   const files = {};
@@ -120,6 +175,9 @@ export function toXlsx(model) {
       ["/xl/workbook.xml", "spreadsheetml.sheet.main"],
       ["/xl/worksheets/sheet1.xml", "spreadsheetml.worksheet"],
       ["/xl/worksheets/sheet2.xml", "spreadsheetml.worksheet"],
+      ...(hasPeaks
+        ? [["/xl/worksheets/sheet3.xml", "spreadsheetml.worksheet"]]
+        : []),
       ["/xl/drawings/drawing1.xml", "drawing"],
       ["/xl/charts/chart1.xml", "drawingml.chart"],
     ]
@@ -137,13 +195,14 @@ export function toXlsx(model) {
   );
   put(
     "xl/workbook.xml",
-    `<workbook xmlns="${main}" xmlns:r="${rel}"><sheets><sheet name="Espectro" sheetId="1" r:id="rId1"/><sheet name="Metadatos" sheetId="2" r:id="rId2"/></sheets></workbook>`,
+    `<workbook xmlns="${main}" xmlns:r="${rel}"><sheets><sheet name="Espectro" sheetId="1" r:id="rId1"/><sheet name="Metadatos" sheetId="2" r:id="rId2"/>${hasPeaks ? '<sheet name="Picos" sheetId="3" r:id="rId3"/>' : ""}</sheets></workbook>`,
   );
   put(
     "xl/_rels/workbook.xml.rels",
     relationships([
       ["rId1", "worksheet", "worksheets/sheet1.xml"],
       ["rId2", "worksheet", "worksheets/sheet2.xml"],
+      ...(hasPeaks ? [["rId3", "worksheet", "worksheets/sheet3.xml"]] : []),
     ]),
   );
   put(
@@ -154,6 +213,26 @@ export function toXlsx(model) {
     "xl/worksheets/sheet2.xml",
     worksheet([["Campo", "Valor"], ...metadataRows(model)]),
   );
+  if (hasPeaks)
+    put(
+      "xl/worksheets/sheet3.xml",
+      worksheet([
+        [
+          "Canal",
+          "Energía observada (keV)",
+          "Candidato",
+          "Energía referencia (keV)",
+          "Diferencia (keV)",
+          "Tolerancia (keV)",
+          "Líneas compatibles",
+          "Tipo de resultado",
+          "Emisor",
+          "ROI inicio",
+          "ROI fin",
+        ],
+        ...peakRows(model.identification),
+      ]),
+    );
   put(
     "xl/worksheets/_rels/sheet1.xml.rels",
     relationships([["rId1", "drawing", "../drawings/drawing1.xml"]]),
