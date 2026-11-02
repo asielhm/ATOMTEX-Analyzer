@@ -1,4 +1,4 @@
-// ATS text layout verified against the user-provided ejemplo_123.ats.
+// ATS text layout verified against the a user-provided real spectrum.
 export const MAX_BYTES = 8 * 1024 * 1024;
 export const MAX_CHANNELS = 65536;
 export class AtsError extends Error {}
@@ -92,7 +92,7 @@ export function parseAts(text, filename = "") {
     fail("ECALIBRATION debe contener energías no negativas y no decrecientes.");
   const hasEnergy = energies?.some((e) => e > 0);
   const warnings = [
-    "Lectura contrastada con ejemplo_123.ats; la validez física de la calibración no se verifica.",
+    "Lectura contrastada con una muestra real; la validez física de la calibración no se verifica.",
   ];
   if (!hasEnergy)
     warnings.push(

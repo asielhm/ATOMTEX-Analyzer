@@ -1,5 +1,7 @@
 name: Deploy GitHub Pages
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -8,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
-    # Explicit manual dispatch on main only. Pages settings remain a user action.
+    # Every main update is validated before deployment. Manual reruns remain available.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -18,8 +20,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run format:check
       - run: npm test
       - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

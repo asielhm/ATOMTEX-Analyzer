@@ -69,3 +69,20 @@ test("untrusted metadata stays literal XML text, never formulas; absent energy s
   assert.equal(dataRows(m)[0][1], null);
   assert.match(toCsv(m), /0;;0;;;/);
 });
+
+test("candidate report is exported as numeric peak rows with traceable settings and no commercial marker", async () => {
+  const { identifySpectrum } = await import("../src/identification.js");
+  const model = structuredClone(sample);
+  model.identification = identifySpectrum(model);
+  model.metadata.push(["ATS", "ATOMTEXSPECTRUM", ""]);
+  const files = unzipSync(toXlsx(model));
+  assert.match(strFromU8(files["xl/workbook.xml"]), /name="Picos"/);
+  assert.match(strFromU8(files["[Content_Types].xml"]), /sheet3.xml/);
+  const metadata = strFromU8(files["xl/worksheets/sheet2.xml"]);
+  assert.match(metadata, /sandia-subset-1/);
+  assert.match(metadata, /Tolerancia absoluta/);
+  assert.doesNotMatch(metadata, /ATOMTEX|ejemplo_123/);
+  const peaks = strFromU8(files["xl/worksheets/sheet3.xml"]);
+  assert.match(peaks, /Energía observada/);
+  assert.match(peaks, /no confirmado/);
+});

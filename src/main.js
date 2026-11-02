@@ -4,6 +4,7 @@ import { decodeAts, parseAts, MAX_BYTES } from "./parser.js";
 import { toCsv, toXlsx, metadataRows } from "./export.js";
 import { analyzeRoi } from "./analysis.js";
 import { createRoiControls } from "./roi-controls.js";
+import { createIdentificationPanel, peakMarkers } from "./identification-ui.js";
 import "./style.css";
 Chart.register(zoomPlugin);
 const $ = (id) => document.getElementById(id);
@@ -39,6 +40,45 @@ const roiControls = createRoiControls($("chart"), {
     applyAnalysis();
   },
 });
+const identificationPanel = createIdentificationPanel({
+  getModel: () => model,
+  onUpdate: () => {
+    refreshMetadata();
+    if (chart && model) renderChart(true);
+  },
+  onSelect: (peak) => {
+    if (!model) return;
+    const minChannels =
+      $("baseline-method").value === "manual" ? 2 : 2 * Number($("edge").value);
+    if (
+      !Number.isInteger(minChannels) ||
+      minChannels < 2 ||
+      minChannels > model.counts.length
+    ) {
+      message("Revisá la ventana de extremos antes de analizar este pico.");
+      return;
+    }
+    let start = Math.max(0, peak.start),
+      end = Math.min(model.counts.length - 1, peak.end);
+    if (end - start + 1 < minChannels) {
+      start = Math.max(
+        0,
+        Math.min(
+          model.counts.length - minChannels,
+          peak.channel - Math.floor(minChannels / 2),
+        ),
+      );
+      end = start + minChannels - 1;
+    }
+    $("roi-start").value = start;
+    $("roi-end").value = end;
+    if ($("baseline-method").value === "manual") {
+      $("base-left").value = model.counts[start];
+      $("base-right").value = model.counts[end];
+    }
+    applyAnalysis();
+  },
+});
 function setPick(mode) {
   pickMode = mode;
   picks = [];
@@ -56,7 +96,10 @@ function setPick(mode) {
         : "Hacé dos clics: el primero fija la altura izquierda y el segundo la derecha de la ROI actual.";
 }
 function resetAnalysis() {
-  if (model) delete model.analysis;
+  if (model) {
+    delete model.analysis;
+    refreshMetadata();
+  }
   $("roi-values").hidden = true;
   $("focus-roi").disabled = true;
   $("roi-status").textContent =
@@ -86,6 +129,7 @@ function applyAnalysis() {
     $("roi-status").textContent =
       `ROI aplicada: canales ${result.start}–${result.end} (inclusive). Línea base ${result.method === "manual" ? "manual" : result.method === "linear" ? "lineal" : "constante"}.`;
     setPick(null);
+    refreshMetadata();
     renderChart(true);
   } catch (error) {
     resetAnalysis();
@@ -95,6 +139,15 @@ function applyAnalysis() {
 }
 const fmt = (value) =>
   value.toLocaleString("es-AR", { maximumFractionDigits: 8 });
+function refreshMetadata() {
+  if (!model) return;
+  $("metadata").replaceChildren(
+    ...metadataRows(model).flatMap(([key, value]) => [
+      cell("dt", key),
+      cell("dd", value),
+    ]),
+  );
+}
 function message(error) {
   $("error").textContent = error;
   $("error").hidden = false;
@@ -152,7 +205,7 @@ function renderChart(preserveView = false) {
   }
   chart = new Chart($("chart"), {
     type: "line",
-    plugins: [roiControls],
+    plugins: [peakMarkers(() => model), roiControls],
     data: { datasets },
     options: {
       responsive: true,
@@ -258,6 +311,7 @@ async function load(files) {
     $("results").hidden = false;
     document.querySelector("main").classList.add("has-spectrum");
     renderChart();
+    identificationPanel.run({ autoSelect: true });
     $("status").textContent =
       "Archivo ATS leído localmente. Datos listos para analizar y exportar.";
   } catch (error) {
